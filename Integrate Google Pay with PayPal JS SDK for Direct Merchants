@@ -279,6 +279,12 @@
   }
 }
 
+**Conclusion:**
+Added error handling to detect API call failures. 
+To deep copy, 'structuredClone(baseRequest)' was used instead of 'Object.assign()'. 
+Improved logging for easier debugging. 
+'processPayment()' has been optimized to correctly reject unsuccessful transactions.
+
 For more information on **full code**, **SCA (Strong Customer Authentication)**, **Test Integration**, and **Go Live** see [https://developer.paypal.com/docs/checkout/apm/google-pay/](#https://developer.paypal.com/docs/checkout/apm/google-pay/), Paypal Developer Guide.
 
 Reference
