@@ -1,37 +1,144 @@
 # Google Pay integration
-**Google Pay** is a mobile payment and digital wallet service provided by Alphabet Inc.
-**For Buyers:** Google Pay allows consumers to make PayPal payments using a web browser.
-**For Sellers:** Businesses can use PayPal and Google Pay to offer both physical products (for example, clothing, electronic gadgets) and intangible services (such as event tickets, gym memberships).
+  **Google Pay** is a mobile payment and digital wallet service provided by Alphabet Inc.
+  **For Buyers:** Google Pay allows consumers to make PayPal payments using a web browser.
+  **For Sellers:** Businesses can use PayPal and Google Pay to offer both physical products (for example, clothing, electronic gadgets) and intangible services (such as event tickets, gym memberships).
+
 ## Supported Countries and Currencies
-Google Pay operates in 36 countries and accepts 22 currencies for transactions.
-Google Pay can be used in the following countries:
-Australia, Austria, Belgium, Bulgaria, Canada, China, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hong Kong, Hungary, Ireland, Italy, Japan, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Singapore, Slovakia, Slovenia, Spain, Sweden, United States, United Kingdom.
+   Google Pay operates in 36 countries and accepts 22 currencies for transactions.
+   Google Pay can be used in the following countries:
+   Australia, Austria, Belgium, Bulgaria, Canada, China, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hong Kong, Hungary, Ireland, Italy, Japan, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Singapore, Slovakia, Slovenia, Spain, Sweden, United States, United Kingdom.
  
-Google Pay transactions can be processed in these currencies:
-AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, HUF, ILS, JPY, MXN, NOK, NZD, PHP, PLN, SEK,  SGD, THB, TWD, USD
+   Google Pay transactions can be processed in these currencies:
+   AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, HUF, ILS, JPY, MXN, NOK, NZD, PHP, PLN, SEK,  SGD, THB, TWD, USD
 
-**Note:** Local processors (NTTD) and acquirers in Japan do not support TPAN for Visa, MasterCard, JCB, or Diners Club cards.
-If a customer wants to integrate payment methods other than Google Pay, to know more about further integration options, see the Expanded PayPal Checkout document.
+   **Note:** Local processors (NTTD) and acquirers in Japan do not support TPAN for Visa, MasterCard, JCB, or Diners Club cards.
+             If a customer wants to integrate payment methods other than Google Pay, to know more about further integration options, see the Expanded PayPal Checkout document.
 
-### **Working Procedure:**
-1.	Google Pay Button appears.
-When customer visit website using a web browser, the Google Pay button appears.
-2.	Buyer clicks the Google Pay button.
-To proceed with the payment, the customer picks the Google Pay button.
-3.	Payment Sheet is shown.
-Website displays a payment sheet with transaction details.
-4.	Buyer selects preferences.
-If necessary, the buyer can change his or her mailing address and pay with another method.
-5.	Buyer authorizes payment.
-To finalize the transaction, the customer confirms the payment after seeing the data.
+### Working Procedure:
+    1.	Google Pay Button appears.
+        When customer visit website using a web browser, the Google Pay button appears.
+    2.	Buyer clicks the Google Pay button.
+        To proceed with the payment, the customer picks the Google Pay button.
+    3.	Payment Sheet is shown.
+        Website displays a payment sheet with transaction details.
+    4.	Buyer selects preferences.
+        If necessary, the buyer can change his or her mailing address and pay with another method.
+    5.	Buyer authorizes payment.
+        To finalize the transaction, the customer confirms the payment after seeing the data.
 
-# Set up Sandbox Account to Accept GPay
-1. Before taking Google Pay on website, ensure that sandbox business account supports it.
-2. Direct merchants can use the PayPal Developer Dashboard to configure their sandbox accounts to accept Google Pay.
+# Setting Up Sandbox Account for Google Pay Integration
+  1. Before taking Google Pay on website, ensure that sandbox business account supports Gpay.
+  2. Direct merchants can use the PayPal **Developer Dashboard** to configure their sandbox accounts to accept Google Pay. The steps are as follows:
 
-a. Log in to the PayPal Developer Dashboard and choose sandbox account.
-b. Go to Apps and Credentials.
-c. Make sure customer is in the PayPal sandbox environment by clicking Sandbox at the top.
-d. Select or create an application.
-e. Scroll down to Features to see if Google Pay is enabled. If Google Pay is not already enabled, choose the Google Pay checkbox and click the **Save** button to enable it.
+     a. Log in to the PayPal [Developer Dashboard](#Developer Dashboard) and choose sandbox account.
+     b. Go to **Apps and Credentials**.
+     c. Make sure customer is in the PayPal sandbox environment by clicking **Sandbox** at the top.
+     d. Select or create an application.
+     e. Scroll down to **Features** to see if Google Pay is enabled. If Google Pay is not already enabled, choose the **Google Pay** checkbox and click the **Save** button to enable it.
+     **Note**: If customer created a sandbox business account through [sandbox.paypal.com](#sandbox.paypal.com), and the Google Pay status for the account shows as disabled, [complete the sandbox onboarding steps](#complete the sandbox onboarding steps) to enable Google Pay.
+               When the integration is ready to go live, read the **Go live** section for details about the additional steps needed for Google Pay onboard.
+
+# Setting Up Test Environment
+  Before developing Google Pay on the Web integration, customer must complete **Get Started** by creating PayPal account, client ID, and sandbox emails for testing.
+
+# Integrate Google Pay Checkout
+
+  Follow the **Integration Guide** to add Google Pay as a checkout option, personalize the payment experience, and easily accept payments.
+
+  1. Call the Orders API.
+     To accept Google Pay directly on the website, configure API endpoints on server to communicate with the PayPal Orders V2 API. The endpoints would be as follows:
+     a. Create an Order.
+     b. Authorize payment.
+     c. Capture payment.
+  2. Implement Server-Side Logic (Node.js Example)
+     The following 'Node.js(Express)' example demonstrates how to integrate PayPal's Orders V2 API, allowing customer to create and capture payments efficiently.
+     **Server-side Code (Node.js)**
+     **server.js**
+     '''javascript
+      const PayPal = require("./paypal-api.js"); // Ensure type: module in package.json
+      /* Create Order Route */
+      app.post("/api/orders", async (req, res) => {
+          const order = await PayPal.createOrder();
+          res.json(order);
+       });
+    /* Capture Payment Route */
+    app.post("/api/orders/:orderID/capture", async (req, res) => {
+        const { orderID } = req.params;
+        const captureData = await PayPal.capturePayment(orderID);
+        res.json(captureData); // Fixed typo: ison -> json
+      });
+      ```
+    3. Access Full Sample Code
+       For more setails, see [https://github.com/paypal-examples/googlepay](#https://github.com/paypal-examples/googlepay).
+ # Set Up Google Pay Button
+  To integrate Google Pay with PayPal on the site, customer need to use both the **Google Pay JavaScript SDK** and the **PayPal JavaScript SDK**.
+ 1. Integrate the **PayPal JavaScript SDK**.
+    Use the script tag provided as follows to include the PayPal SDK in your HTML project.
+    Ensure to replace 'YOUR_CLIENT_ID' and 'SUB_MERCHANT_ID' with current credentials.
+    ```javascript
+     <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD&buyer-country=US&merchant-id=SUB_MERCHANT_ID&components=googlepay"></script>
+    ```
+    **Note**:  The 'components' parameter must include 'googlepay' to enable Google Pay functionality.
+
+ 2. Integrate **GPay JavaScript SDK**.
+    Add the Google Pay SDK to your HTML file and confirm whether it loads properly.
+    ```javascript
+     <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+    ```
+    **Note**: This script loads Google Pay's JavaScript and calls 'onGooglePayLoaded()' once it is ready.
+
+ 3. Check **merchant** and **device compatibility**.
+    Before showing the Google Pay button, ensure that the user's device and browser support Google Pay.
+    To retrieve permitted PaymentMethods for Google Pay, using PayPal's 'Googlepay().config()' function.
+    Steps to check for device compatibility:
+    a. Add 'allowedPaymentMethods' to 'isReadyToPayRequest'.
+    b. Call 'isReadyToPay()' to verify device, browser, and payment method compatibility.
+    c. If the check succeeds, display the Google Pay button.
+       ```javascript
+        async function onGooglePayLoaded() {
+          try {
+            const paymentsClient = getGooglePaymentsClient();
+            const response = await paymentsClient.isReadyToPay(isReadyToPayRequest);
+    
+        if (response?.result) {
+           addGooglePayButton();
+        } else {
+          console.warn("Google Pay is not available for this user or device.");
+        }
+     } catch (err) {
+      console.error("Error checking Google Pay compatibility:", err);
+     }
+   }
+
+ 4. Add **GPay button**.
+    If the user is eligible, create and display the **Google Pay** button.
+    ```javascript
+     function addGooglePayButton() {
+       const paymentsClient = getGooglePaymentsClient();
+       const container = document.getElementById("container");
+
+     if (!container) {
+        console.error("Google Pay button container not found.");
+        return;
+      }
+
+     // Prevent multiple buttons from being added
+     if (container.querySelector(".google-pay-button")) {
+        console.warn("Google Pay button already exists.");
+        return;
+     }
+
+     try {
+        const button = paymentsClient.createButton({
+        onClick: onGooglePaymentButtonClicked, // Ensure this function is defined
+        allowedPaymentMethods: [baseCardPaymentMethod]
+    });
+
+    button.classList.add("google-pay-button"); // Add class for easy identification
+    container.appendChild(button);
+   } catch (error) {
+     console.error("Failed to create Google Pay button:", error);
+   }
+ }
+    
 
