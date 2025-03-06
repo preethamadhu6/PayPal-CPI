@@ -1,0 +1,37 @@
+# Google Pay integration
+**Google Pay** is a mobile payment and digital wallet service provided by Alphabet Inc.
+**For Buyers:** Google Pay allows consumers to make PayPal payments using a web browser.
+**For Sellers:** Businesses can use PayPal and Google Pay to offer both physical products (for example, clothing, electronic gadgets) and intangible services (such as event tickets, gym memberships).
+## Supported Countries and Currencies
+Google Pay operates in 36 countries and accepts 22 currencies for transactions.
+Google Pay can be used in the following countries:
+Australia, Austria, Belgium, Bulgaria, Canada, China, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hong Kong, Hungary, Ireland, Italy, Japan, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Romania, Singapore, Slovakia, Slovenia, Spain, Sweden, United States, United Kingdom.
+ 
+Google Pay transactions can be processed in these currencies:
+AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, HUF, ILS, JPY, MXN, NOK, NZD, PHP, PLN, SEK,  SGD, THB, TWD, USD
+
+**Note:** Local processors (NTTD) and acquirers in Japan do not support TPAN for Visa, MasterCard, JCB, or Diners Club cards.
+If a customer wants to integrate payment methods other than Google Pay, to know more about further integration options, see the Expanded PayPal Checkout document.
+
+### **Working Procedure:**
+1.	Google Pay Button appears.
+When customer visit website using a web browser, the Google Pay button appears.
+2.	Buyer clicks the Google Pay button.
+To proceed with the payment, the customer picks the Google Pay button.
+3.	Payment Sheet is shown.
+Website displays a payment sheet with transaction details.
+4.	Buyer selects preferences.
+If necessary, the buyer can change his or her mailing address and pay with another method.
+5.	Buyer authorizes payment.
+To finalize the transaction, the customer confirms the payment after seeing the data.
+
+# Set up Sandbox Account to Accept GPay
+1. Before taking Google Pay on website, ensure that sandbox business account supports it.
+2. Direct merchants can use the PayPal Developer Dashboard to configure their sandbox accounts to accept Google Pay.
+
+a. Log in to the PayPal Developer Dashboard and choose sandbox account.
+b. Go to Apps and Credentials.
+c. Make sure customer is in the PayPal sandbox environment by clicking Sandbox at the top.
+d. Select or create an application.
+e. Scroll down to Features to see if Google Pay is enabled. If Google Pay is not already enabled, choose the Google Pay checkbox and click the **Save** button to enable it.
+
