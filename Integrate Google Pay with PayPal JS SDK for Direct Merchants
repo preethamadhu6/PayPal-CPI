@@ -140,5 +140,6 @@
      console.error("Failed to create Google Pay button:", error);
    }
  }
-    
+ **Note**: For more information, see steps **6** and **7** in [https://developers.google.com/pay/api/web/guides/tutorial#isreadytopay](#https://developers.google.com/pay/api/web/guides/tutorial#isreadytopay), Googles's Developer Documentation.
+
 
