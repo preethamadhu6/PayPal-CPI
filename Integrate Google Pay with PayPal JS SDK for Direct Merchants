@@ -141,5 +141,34 @@
    }
  }
  **Note**: For more information, see steps **6** and **7** in [https://developers.google.com/pay/api/web/guides/tutorial#isreadytopay](#https://developers.google.com/pay/api/web/guides/tutorial#isreadytopay), Googles's Developer Documentation.
+# Create PaymentDataRequest
+  1. Improve 'getGooglePaymentDataRequest()'.
+     a. Before using 'GooglePayConfig', ensure that it has been properly awaited.
+     b. To perform a deep copy, use 'structuredClone(baseRequest)' rather than 'Object.assign()'.
+     c. Ensure error handling if 'googlePayConfig' fails.
+        ```javascript
+         async function getGooglePaymentDataRequest() {
+          try {
+            const googlePayConfig = await paypal.Googlepay().config();
+            if (!googlePayConfig) throw new Error("Failed to fetch Google Pay config");
+
+            const paymentDataRequest = structuredClone(baseRequest); 
+            paymentDataRequest.allowedPaymentMethods = googlePayConfig.allowedPaymentMethods;
+
+       // Uncomment for Japan integrations only
+       // paymentDataRequest.allowedPaymentMethods[0].parameters.allowedAuthMethods = ['PAN_ONLY'];
+
+    paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+    paymentDataRequest.merchantInfo = googlePayConfig.merchantInfo;
+    paymentDataRequest.callbackIntents = ["PAYMENT_AUTHORIZATION"];
+    
+    return paymentDataRequest;
+  } catch (error) {
+    console.error("Error creating PaymentDataRequest:", error);
+    return null;
+  }
+}
+
+
 
 
